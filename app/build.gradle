@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.deezer.sdk.sample"
 
-        minSdkVersion 8
-        targetSdkVersion 21
+        minSdkVersion 14
+        targetSdkVersion 27
 
         versionCode 1
         versionName "1.0"
+
     }
 
     compileOptions {
@@ -25,9 +26,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions{
+        doNotStrip '*/mips/*.so'
+        doNotStrip '*/mips64/*.so'
+    }
+    splits {
+        abi {
+            enable true
+            reset()
+            include  "armeabi-v7a", "armeabi-v8a"
+            universalApk false
+        }
+    }
 }
-
+//"x86", "armeabi-v7a", "armeabi-v8a", "x86_64"
 dependencies {
-    compile 'com.squareup.picasso:picasso:2.4.0'
-    compile project(':deezer-sdk')
+    implementation 'com.squareup.picasso:picasso:2.4.0'
+    implementation project(':deezer-sdk')
 }

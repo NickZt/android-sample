@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.deezer.sdk.model.PlayableEntity;
 import com.deezer.sdk.model.Playlist;
 import com.deezer.sdk.model.Track;
 import com.deezer.sdk.network.connect.SessionStore;
@@ -28,7 +29,7 @@ import com.deezer.sdk.network.request.DeezerRequest;
 import com.deezer.sdk.network.request.DeezerRequestFactory;
 import com.deezer.sdk.network.request.event.DeezerError;
 import com.deezer.sdk.network.request.event.JsonRequestListener;
-import com.deezer.sdk.network.request.event.OAuthException;
+//import  com.deezer.sdk.network.request.event.OAuthException;
 import com.deezer.sdk.player.PlaylistPlayer;
 import com.deezer.sdk.player.event.OnPlayerProgressListener;
 import com.deezer.sdk.player.event.PlayerWrapperListener;
@@ -157,9 +158,9 @@ public class UserPlaylistsActivity extends PlayerActivity
             mPlaylistPlayer.addOnPlayerProgressListener(this);
             setAttachedPlayer(mPlaylistPlayer);
         }
-        catch (OAuthException e) {
-            handleError(e);
-        }
+//        catch (OAuthException e) {
+//            handleError(e);
+//        }
         catch (TooManyPlayersExceptions e) {
             handleError(e);
         }
@@ -229,22 +230,36 @@ public class UserPlaylistsActivity extends PlayerActivity
     // Player listener
     //////////////////////////////////////////////////////////////////////////////////////
     
-    @Override
-    public void onPlayTrack(final Track track) {
-        displayTrack(track);
-        if (mOption == Option.fade_in_out) {
-            applyFadeInOut(0);
-        }
-    }
-    
-    @Override
-    public void onTrackEnded(final Track track) {
-    }
-    
+//    @Override
+//    public void onPlayTrack(final Track track) {
+//        displayTrack(track);
+//        if (mOption == Option.fade_in_out) {
+//            applyFadeInOut(0);
+//        }
+//    }
+//
+//    @Override
+//    public void onTrackEnded(final Track track) {
+//    }
+//
     @Override
     public void onAllTracksEnded() {
     }
-    
+
+    @Override
+    public void onPlayTrack(PlayableEntity playableEntity) {
+        displayTrack((Track) playableEntity);
+        if (mOption == Option.fade_in_out) {
+            applyFadeInOut(0);
+        }
+
+    }
+
+    @Override
+    public void onTrackEnded(PlayableEntity playableEntity) {
+
+    }
+
     @Override
     public void onRequestException(final Exception e, final Object requestId) {
         handleError(e);
